@@ -1,0 +1,6 @@
+{
+  "columns": "created_utc, subreddit, author, title, selftext",
+  "keyword_search": true,
+  "search_fields": "title, selftext",
+  "keywords": "$aapl, $msft, $amzn, $nvda, $googl, $goog, $meta, $brk.b, $brk-b, $tsla, $unh"
+}
