@@ -74,12 +74,14 @@ if __name__ == "__main__":
 	bad_lines = 0
 	added_lines = 0
 	output_file = open(output_file_path, "w", encoding='utf-8', newline="")
-	writer = csv.writer(output_file)
+	writer = csv.writer(output_file, escapechar='\\')
 	writer.writerow(columns)
 	try:
 		for line, file_bytes_processed in read_lines_zst(input_file_path):
 			try:
 				obj = json.loads(line)
+				# print(obj.keys())
+				# break
 				output_obj = []
 				if keyword_search:
 					if search_str(keywords, search_fields, obj):
