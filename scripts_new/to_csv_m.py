@@ -11,6 +11,7 @@ import json
 import csv
 import sys
 import os
+import re
 
 log = logging.getLogger("bot")
 log.setLevel(logging.DEBUG)
@@ -44,12 +45,14 @@ def read_lines_zst(file_name):
 			buffer = lines[-1]
 		reader.close()
 
-def search_str(keywords, search_fields, obj):
+def search_str(pattern, search_fields, obj):
 	for col in search_fields:
 		text = str(obj[col]).encode("utf-8", errors='replace').decode().lower()
-		for keyword in keywords:
-			if keyword in text:
-				return True
+		if re.search(pattern, text):
+			return True
+		# for keyword in keywords:
+		# 	if keyword in text:
+		# 		return True
 	return False
 
 if __name__ == "__main__":
@@ -64,7 +67,11 @@ if __name__ == "__main__":
 	columns = [i.strip() for i in config["columns"].split(",")]
 	keyword_search = config["keyword_search"]
 	search_fields = [i.strip() for i in config["search_fields"].split(",")]
+	
 	keywords = [i.strip().lower() for i in config["keywords"].split(",")]
+	escaped_keywords = [re.escape(keyword) for keyword in keywords]
+	pattern = r'(?i)(?<!\$)\b{}\b'.format(r'\b|\b'.join(escaped_keywords))
+	# print("PATTERN:", pattern)
 
 	file_size = os.stat(input_file_path).st_size
 	file_lines = 0
@@ -84,7 +91,7 @@ if __name__ == "__main__":
 				# break
 				output_obj = []
 				if keyword_search:
-					if search_str(keywords, search_fields, obj):
+					if search_str(pattern, search_fields, obj):
 						for field in columns:
 							output_obj.append(str(obj[field]).encode("utf-8", errors='replace').decode())
 						writer.writerow(output_obj)
