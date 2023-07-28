@@ -2,5 +2,7 @@
   "columns": "id, created_utc, subreddit, author, title, selftext, permalink, url",
   "keyword_search": true,
   "search_fields": "title, selftext",
-  "keywords": "aapl, msft, amzn, nvda, googl, goog, tsla, gme"
+  "keywords": "tsla, aapl, msft, gme, nvda, nflx, mcd",
+  "input_dir": "/Volumes/Crucial X6/Dissertation/reddit/submissions/",
+  "output_dir": "/Volumes/Crucial X6/Dissertation/reddit/csv_new_stocks/"
 }
